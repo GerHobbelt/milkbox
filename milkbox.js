@@ -357,7 +357,7 @@ this.Milkbox = new Class({
 
 	checkFileType:function(file,type){
 		var href = (typeOf(file) !== 'string' ? file.href : file);
-		var regexp = new RegExp('\\.('+type+')$','i');
+		var regexp = new RegExp('\\.('+type+')$','i');              // [i_a] regex escape fix: \\
 		return href.split('?')[0].test(regexp);
 	},
 
