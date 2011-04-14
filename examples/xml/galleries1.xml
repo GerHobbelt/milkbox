@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<div id="galleries">
+	<div class="gallery" name="xmlG1" >
+		<a href="img/01b.jpg" title="Big 1" />
+		<a href="img/logo.swf?autoPlay=1" data-milkbox-size="width:600, height:200" title="Swf file: this one needs flash player 10." />
+		<a href="img/03b.jpg" title="Lorem ipsum..." />
+	</div>
+	
+	<div class="gallery" name="xmlG2" autoplay="true" autoplay_delay="5" >
+		<a href="img/01b.jpg" title="Lorem ipsum..." />
+		<a href="img/02b.jpg" title="Lorem ipsum..." />
+		<a href="img/03b.jpg" title="Lorem ipsum..." />
+	</div>
+</div>
+
+
+

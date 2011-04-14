@@ -1,14 +1,14 @@
 body{ 
-	background-color:#000; 
+	background-color:#eee; 
 	color:#777;
 	font:normal 14px verdana, sans-serif;
 	line-height:21px;
 }
 
 #box{ 
-	/*margin:0 auto; */
-	padding:50px;
-	width:600px;
+	margin:0 auto; 
+	padding:0 0 50px 0; 
+	width:600px; 
 	/*background-color:#F00; */
 }
 
@@ -30,10 +30,8 @@ ul{ list-style:none; margin:0; padding:0; }
 ol{ list-style-position:inside; margin:0 0 10px 0; padding:0;}
 li{ padding:0px; margin-bottom:10px; }
 
-strong{ color:#b3b3b3; }
-
-#components, #tests, .customization{ margin:10px 0 20px 25px; }
-#components li, #tests li, .customization li{ margin-bottom:3px; }
+#components, .customization{ margin:10px 0 0 25px; }
+#components li, .customization li{ margin-bottom:3px; }
 
 #gallery{ width:100%; }
 

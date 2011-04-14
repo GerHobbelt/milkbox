@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<title>Milkbox - Lightbox for Mootools 1.3.x</title>
+
+	<link rel="stylesheet" href="css/default.css" type="text/css" />
+	<link rel="stylesheet" href="css/main.css" type="text/css" />
+	<link rel="stylesheet" href="css/milkbox/milkbox.css" type="text/css" />
+	
+	<style type="text/css" title="text/css">
+		#test{ width:15px; color:#fff; }
+	</style>
+	
+ 	<script type="text/javascript" src="js/mootools-core-1.3.1-yc.js"></script>
+ 	<script type="text/javascript" src="js/mootools-more-1.3.1.1.js"></script> 
+	<script type="text/javascript" src="js/milkbox.js"></script>
+	<!-- <script type="text/javascript" src="js/milkbox-yc.js"></script> -->
+
+	<script type="text/javascript">
+	// <![CDATA[
+		var addJsonGalleries;
+		var json3;
+		
+		$(window).addEvent('domready',function(){
+
+			//milkbox.setOptions({ autoSize:true, maxHeight:300 })
+			//milkbox.setOptions({ autoSize:true, imageOfText:'di' });
+
+			//milkbox.addGalleries('xml/galleries.xml');
+			
+			addJsonGalleries = function(){
+			
+				milkbox.addGalleries([
+					{ name:'obj-gall1', autoplay:true, autoplay_delay:4, files:[ { href:'img/01b.jpg', title:'Test title' }, { href:'swf/testswf1.swf?var1=yellow&var2=300', size:"width:550, height:400" } ]},
+					{ name:'obj-gall2', autoplay_delay:9, files:[ { href:'swf/testswf2.swf?var1=ultex&var2=30', size:"width:400, height:300" }, { href:'swf/testswf1.swf', size:"width:550, height:400" } ]},
+					{ name:'obj-gall3', files:[ { href:'img/croda-b.jpg' }, { href:'img/ska-b.jpg' } ]}
+				]);
+			
+			}//addObjGalleries
+			
+// 			json3 = { name:'json3', files:[ { href:'img/ska-b.jpg' }, { href:'img/croda-b.jpg' } ]}
+// 			
+// 			
+// 			milkbox.addEvent('xmlGalleries',function(){
+// 				//console.log(milkbox.galleries.length);
+// 			});
+// 			
+// 			//milkbox.setAutoPlay({gallery:'gall1', autoplay:true, delay:3});
+// 			
+// 			milkbox.addEvent('fileReady',function(){
+// 				//console.log('fileready!!!');
+// 			});
+// 
+// 			//var a = (function(){ console.log('ok',this,a); clearInterval(a); }).periodical(500,this);
+// 			
+// 			//milkbox.getGallery('gall2').setOptions({autoplay:true});
+// 			//console.log(milkbox.getGallery('gall2'));//
+// 			//console.log($('test').getSize().x);
+// 			//milkbox.open('obj-gall1',0);
+		});
+	// ]]>
+	</script>
+	
+</head>
+
+<body>
+	<div id="box">	
+		<table id="gallery" style="margin-top:20px; ">
+			<tr>
+				<td><a href="img/01b.jpg" data-milkbox="gall1" title="Lorem ipsum..."><img src="img/01.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="img/ska-b.jpg" data-milkbox="gall1" ><img src="img/ska.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="img/croda-b.jpg" data-milkbox="gall1" title="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"><img src="img/croda.jpg" alt="" width="100" height="100" /></a></td>
+				<td style="width:100px"><a href="html-external/external.html?var1=ext1" data-milkbox="gall1" data-milkbox-size="width:600, height:350" title="Html file: loaded in iframe element."><img src="img/logo.jpg" alt="" width="100" height="100" /></a></td>
+			</tr>
+			<tr>
+				<td colspan="4" style="height:50px"></td>
+			</tr>
+			<tr>
+				<td><a href="img/01b.jpg" data-milkbox="gall2" title="Lorem ipsum..."><img src="img/01.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="swf/testswf1.swf" data-milkbox="gall2" data-milkbox-size="width:550, height:400"  title="Lorem ipsum..."><img src="img/02.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="img/lariceto.jpg" data-milkbox="gall2" data-milkbox-size="width:650, height:250" title="And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it from the caption. And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it from the ca"><img src="img/04.jpg" alt="" width="100" height="100" /></a></td>
+				<td style="width:100px"><a href="img/03b.jpg" data-milkbox="gall2" title="Lorem &lt;a href=#&gt;ipsum...&lt;/a&gt;"><img src="img/03.jpg" alt="" width="100" height="100" /></a></td>
+			</tr>
+		</table>
+
+		<br /><br />
+		<a href="swf/testswf1.swf" title="singolo 1" data-milkbox="single" data-milkbox-size="width:650, height:250">link singolo 1 swf</a> // 
+		<a href="img/02b.jpg" title="singolo 2" data-milkbox="single">link singolo 2 jpg</a>
+		<br /><br />
+		<a href="html-external/external.html?var1=ext1" title="Html file loaded in iFrame" data-milkbox="html">Html test 1</a> // 
+		<a href="html-external/external2.html" title="Html file loaded in iFrame" data-milkbox="html" data-milkbox-size="width:600, height:300">Html test 2</a>
+
+		<br /><br /><br />
+		<a href="#" onclick="milkbox.open('obj-gall1',1)">test milkbox.open</a>
+		<br /><br />
+		<a href="#" onclick="milkbox.setAutoPlay([{ gallery:'gall1', autoplay:true, delay:6 },{ gallery:'htmlgallery', autoplay:true, delay:10 } ])">test milkbox.setAutoPlay</a>
+		<br /><br />
+		<a href="#" onclick="milkbox.openWithFile({ href:'img/01b.jpg', title:'Test openWithFile'})">milkbox.openWithFile</a>
+		<br /><br />
+		<a href="#" onclick="addJsonGalleries()">add json galleries</a>
+		<br /><br />
+		<a href="#" onclick="milkbox.addGalleries('xml/galleries.xml')">add xml galleries</a>
+		<br /><br />
+		<a href="#" onclick="milkbox.open('xmlG1',0)">show xml galleries</a>
+		<br /><br />
+		<a href="#" onclick="milkbox.reloadPageGalleries()">reloadPageGalleries</a>
+		<br /><br />
+		<a href="#" onclick="milkbox.resetExternalGalleries([json3])">resetExternalGalleries</a>
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<br /><br />
+		<a href="img/02b.jpg" title="test scroll" data-milkbox="single">test scroll</a>
+
+		<div id="test"></div>
+	
+		<!-- <div id="inject-test" style="width:600px; height:400px; background-color:#ccc"></div> -->
+
+	</div><!-- /box -->
+
+</body>
+</html>
+  

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<div id="galleries">
+	<div class="gallery" name="xmlG3" >
+		<a href="img/01b.jpg" title="Lorem ipsum..." />
+		<a href="img/02b.jpg" title="Lorem ipsum..." />
+		<a href="img/03b.jpg" title="Lorem ipsum..." />
+		<a href="img/04b.jpg" title="Lorem ipsum..." />
+	</div>
+	
+	<div class="gallery" name="xmlG4" >
+		<a href="img/01b.jpg" title="Lorem ipsum..." />
+		<a href="img/02b.jpg" title="Lorem ipsum..." />
+		<a href="img/03b.jpg" title="Lorem ipsum..." />
+		<a href="img/lariceto.jpg" title="Lorem ipsum..." />
+	</div>
+</div>
+
+
+
