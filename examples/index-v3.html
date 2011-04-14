@@ -39,25 +39,25 @@
 			
 			}; //addObjGalleries
 			
-// 			json3 = { name:'json3', files:[ { href:'img/ska-b.jpg' }, { href:'img/croda-b.jpg' } ]}
-// 			
-// 			
-// 			milkbox.addEvent('xmlGalleries',function(){
-// 				//console.log(milkbox.galleries.length);
-// 			});
-// 			
-// 			//milkbox.setAutoPlay({gallery:'gall1', autoplay:true, delay:3});
-// 			
-// 			milkbox.addEvent('fileReady',function(){
-// 				//console.log('fileready!!!');
-// 			});
-// 
-// 			//var a = (function(){ console.log('ok',this,a); clearInterval(a); }).periodical(500,this);
-// 			
-// 			//milkbox.getGallery('gall2').setOptions({autoplay:true});
-// 			//console.log(milkbox.getGallery('gall2'));//
-// 			//console.log($('test').getSize().x);
-// 			//milkbox.open('obj-gall1',0);
+ 			json3 = { name:'json3', files:[ { href:'img/ska-b.jpg' }, { href:'img/croda-b.jpg' } ]}
+ 			
+ 			
+ 			milkbox.addEvent('xmlGalleries',function(){
+ 				if (typeof console !== 'undefined' && console.log) console.log('xmlGalleries: length = ' + milkbox.galleries.length);
+ 			});
+ 			
+ 			//milkbox.setAutoPlay({gallery:'gall1', autoplay:true, delay:3});
+ 			
+ 			milkbox.addEvent('fileReady',function(){
+ 				if (typeof console !== 'undefined' && console.log) console.log('fileready!!!');
+ 			});
+ 
+ 			//var a = (function(){ console.log('ok',this,a); clearInterval(a); }).periodical(500,this);
+ 			
+ 			//milkbox.getGallery('gall2').setOptions({autoplay:true});
+ 			//console.log(milkbox.getGallery('gall2'));//
+ 			//console.log($('test').getSize().x);
+ 			//milkbox.open('obj-gall1',0);
 		});
 	// ]]>
 	</script>
@@ -92,21 +92,21 @@
 		<a href="html-external/external2.html" title="Html file loaded in iFrame" data-milkbox="html" data-milkbox-size="width:600, height:300">Html test 2</a>
 
 		<br /><br /><br />
-		<a href="#" onclick="milkbox.open('obj-gall1',1)">test milkbox.open</a>
+		<a href="#" onclick="if (!milkbox.open('obj-gall1',1)) { alert('gallery {obj-gall1} is not available, run {add JSON galleries} first!'); } return false;">test milkbox.open</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.setAutoPlay([{ gallery:'gall1', autoplay:true, delay:6 },{ gallery:'htmlgallery', autoplay:true, delay:10 } ])">test milkbox.setAutoPlay</a>
+		<a href="#" onclick="milkbox.setAutoPlay([{ gallery:'gall1', autoplay:true, delay:6 },{ gallery:'htmlgallery', autoplay:true, delay:10 } ]); return false;">test milkbox.setAutoPlay</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.openWithFile({ href:'img/01b.jpg', title:'Test openWithFile'})">milkbox.openWithFile</a>
+		<a href="#" onclick="milkbox.openWithFile({ href:'img/01b.jpg', title:'Test openWithFile'}); return false;">milkbox.openWithFile</a>
 		<br /><br />
-		<a href="#" onclick="addJsonGalleries()">add json galleries</a>
+		<a href="#" onclick="addJsonGalleries(); return false;">add json galleries</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.addGalleries('xml/galleries.xml')">add xml galleries</a>
+		<a href="#" onclick="milkbox.addGalleries('xml/galleries.xml'); return false;">add xml galleries</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.open('xmlG1',0)">show xml galleries</a>
+		<a href="#" onclick="milkbox.open('xmlG1',0); return false;">show xml galleries</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.reloadPageGalleries()">reloadPageGalleries</a>
+		<a href="#" onclick="milkbox.reloadPageGalleries(); return false;">reloadPageGalleries</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.resetExternalGalleries([json3])">resetExternalGalleries</a>
+		<a href="#" onclick="milkbox.resetExternalGalleries([json3]); return false;">resetExternalGalleries</a>
 		<br /><br />
 		<br /><br />
 		<br /><br />
