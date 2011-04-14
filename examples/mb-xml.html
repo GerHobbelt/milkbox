@@ -1,18 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>Milkbox - Lightbox for Mootools 1.2</title>
 
    <style type="text/css">
 		@import url(css/default.css);
 		@import url(css/main.css);
-		@import url(css/milkbox/milkbox.css);/* Milkbox css */
+		@import url(../css/milkbox.css);/* Milkbox css */
 	</style>
 	
- 	<script type="text/javascript" src="js/mootools-1.2.3-core-yc.js"></script>
- 	<script type="text/javascript" src="js/mootools-1.2.3.1-assets.js"></script> 
-	<script type="text/javascript" src="js/milkbox-yc.js"></script>
+ 	<script type="text/javascript" src="../../../../../mootools-core.js"></script>
+ 	<script type="text/javascript" src="../../../../../mootools-more.js"></script> 
+	<script type="text/javascript" src="../milkbox.js"></script>
 	
 	<script type="text/javascript">
 	// <![CDATA[
@@ -22,11 +22,11 @@
 			milkbox.addGalleries('xml/galleries.xml');
 		
 			$('testButton1').addEvent('click',function(){
-				milkbox.showGallery({ gallery:'xmlG1' });
+				milkbox.open('xmlG1');
 			});
 			
 			$('testButton2').addEvent('click',function(){
-				milkbox.showGallery({ gallery:'xmlG2' });
+				milkbox.open('xmlG2');
 			});
 		
 		});
