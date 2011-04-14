@@ -1,0 +1,28 @@
+// for those without Flash CS5, here's the actionscript for frame 1 (the only frame in the .FLA):
+
+stop();
+//
+import flash.external.ExternalInterface;
+
+debug.text = (ExternalInterface.available).toString();
+
+////if you need, load some xml:
+ExternalInterface.call("milkbox.addGalleries",'xml/galleries.xml');
+debug.appendText("\n- galleries.xml loading");
+
+var item_arr = [ "img/03b.jpg", 1, 2, 0, 1 ];
+var idx:Number = 0;
+//button.item_idx = 0;
+
+function openMilkboxFromAS(e:MouseEvent){
+	//var idx = e.currentTarget.item_idx;
+	ExternalInterface.call("milkbox.open", /* gallery= */ 'xmlG1', /* index= */ item_arr[idx] );
+	debug.text = "- showGallery == open(" + item_arr[idx] + ") invoked";
+	idx++;
+	if (item_arr.length <= idx) { idx = 0; }
+	//e.currentTarget.item_idx = idx;
+}
+
+button.buttonMode = true;
+button.addEventListener(MouseEvent.CLICK,openMilkboxFromAS);
+
