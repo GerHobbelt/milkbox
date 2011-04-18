@@ -17,7 +17,7 @@ h1,h2{
 	margin-top:25px; 
 }
 
-h1{ font-size:24px; margin-bottom:36px; }
+h1{ color: #fff; font-size:24px; margin-bottom:36px; }
 h2{ color:#f2aa24; margin-bottom:15px; }
 
 .orange{ color:#f2aa24; }
@@ -39,6 +39,7 @@ li{ padding:0px; margin-bottom:10px; }
 
 #test-box{
 	background-color: #fff;
+	color: red;
 	width:600px;
 	height:400px;
 }

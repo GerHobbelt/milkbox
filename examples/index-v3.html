@@ -92,7 +92,9 @@
 		<a href="html-external/external2.html" title="Html file loaded in iFrame" data-milkbox="html" data-milkbox-size="width:600, height:300">Html test 2</a>
 
 		<br /><br /><br />
-		<a href="#" onclick="if (!milkbox.open('obj-gall1',1)) { alert('gallery {obj-gall1} is not available, run {add JSON galleries} first!'); } return false;">test milkbox.open</a>
+		<a href="#" onclick="if (!milkbox.open('obj-gall1',1)) { alert('gallery {obj-gall1} is not available, run {add JSON galleries} first!'); } return false;">test milkbox.open (gallery 1)</a> //
+		<a href="#" onclick="if (!milkbox.open('obj-gall2',1)) { alert('gallery {obj-gall2} is not available, run {add JSON galleries} first!'); } return false;">test milkbox.open (gallery 2)</a> //
+		<a href="#" onclick="if (!milkbox.open('obj-gall3',1)) { alert('gallery {obj-gall3} is not available, run {add JSON galleries} first!'); } return false;">test milkbox.open (gallery 3)</a>
 		<br /><br />
 		<a href="#" onclick="milkbox.setAutoPlay([{ gallery:'gall1', autoplay:true, delay:6 },{ gallery:'htmlgallery', autoplay:true, delay:10 } ]); return false;">test milkbox.setAutoPlay</a>
 		<br /><br />
@@ -101,6 +103,8 @@
 		<a href="#" onclick="addJsonGalleries(); return false;">add json galleries</a>
 		<br /><br />
 		<a href="#" onclick="milkbox.addGalleries('xml/galleries.xml'); return false;">add xml galleries</a>
+		<br /><br />
+		<a href="#" onclick="if (!milkbox.open('json3',0)) { alert('gallery {json3} is not available, run {resetExternalGalleries} first!'); } return false;">show json EXTERNAL gallery</a>
 		<br /><br />
 		<a href="#" onclick="milkbox.open('xmlG1',0); return false;">show xml galleries</a>
 		<br /><br />
