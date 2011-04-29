@@ -23,7 +23,7 @@ provides: [Core, MooTools, Type, typeOf, instanceOf, Native]
 (function(){
 
 this.MooTools = {
-	version: '1.3.2dev',
+	version: '1.3.3dev',
 	build: '%build%'
 };
 
@@ -195,7 +195,7 @@ var implement = function(name, method){
 		if (typeOf(hook) == 'type') implement.call(hook, name, method);
 		else hook.call(this, name, method);
 	}
-	
+
 	var previous = this.prototype[name];
 	if (previous == null || !previous.$protected) this.prototype[name] = method;
 
@@ -529,13 +529,7 @@ provides: Array
 
 Array.implement({
 
-	invoke: function(methodName){
-		var args = Array.slice(arguments, 1);
-		return this.map(function(item){
-			return item[methodName].apply(item, args);
-		});
-	},
-
+	/*<!ES5>*/
 	every: function(fn, bind){
 		for (var i = 0, l = this.length; i < l; i++){
 			if ((i in this) && !fn.call(bind, this[i], i, this)) return false;
@@ -549,12 +543,6 @@ Array.implement({
 			if ((i in this) && fn.call(bind, this[i], i, this)) results.push(this[i]);
 		}
 		return results;
-	},
-
-	clean: function(){
-		return this.filter(function(item){
-			return item != null;
-		});
 	},
 
 	indexOf: function(item, from){
@@ -578,6 +566,20 @@ Array.implement({
 			if ((i in this) && fn.call(bind, this[i], i, this)) return true;
 		}
 		return false;
+	},
+	/*</!ES5>*/
+
+	clean: function(){
+		return this.filter(function(item){
+			return item != null;
+		});
+	},
+
+	invoke: function(methodName){
+		var args = Array.slice(arguments, 1);
+		return this.map(function(item){
+			return item[methodName].apply(item, args);
+		});
 	},
 
 	associate: function(keys){
@@ -862,20 +864,22 @@ Function.implement({
 		try {
 			return this.apply(bind, Array.from(args));
 		} catch (e){}
-		
+
 		return null;
 	},
 
+	/*<!ES5>*/
 	bind: function(bind){
 		var self = this,
 			args = (arguments.length > 1) ? Array.slice(arguments, 1) : null;
-		
+
 		return function(){
 			if (!args && !arguments.length) return self.call(bind);
 			if (args && arguments.length) return self.apply(bind, args.concat(Array.from(arguments)));
 			return self.apply(bind, args || arguments);
 		};
 	},
+	/*</!ES5>*/
 
 	pass: function(args, bind){
 		var self = this;
@@ -971,7 +975,7 @@ Object.extend({
 		var results = {};
 		for (var i = 0, l = keys.length; i < l; i++){
 			var k = keys[i];
-			results[k] = object[k];
+			if (k in object) results[k] = object[k];
 		}
 		return results;
 	},
@@ -986,9 +990,10 @@ Object.extend({
 
 	filter: function(object, fn, bind){
 		var results = {};
-		Object.each(object, function(value, key){
-			if (fn.call(bind, value, key, object)) results[key] = value;
-		});
+		for (var key in object){
+			var value = object[key];
+			if (hasOwnProperty.call(object, key) && fn.call(bind, value, key, object)) results[key] = value;
+		}
 		return results;
 	},
 
@@ -1316,12 +1321,13 @@ Document.mirror(function(name, method){
 });
 
 document.html = document.documentElement;
-document.head = document.getElementsByTagName('head')[0];
+if (!document.head) document.head = document.getElementsByTagName('head')[0];
 
 if (document.execCommand) try {
 	document.execCommand("BackgroundImageCache", false, true);
 } catch (e){}
 
+/*<ltIE9>*/
 if (this.attachEvent && !this.addEventListener){
 	var unloadEvent = function(){
 		this.detachEvent('onunload', unloadEvent);
@@ -1353,6 +1359,7 @@ try {
 		};
 	});
 }
+/*</ltIE9>*/
 
 //<1.2compat>
 
@@ -2104,7 +2111,7 @@ local.setDocument = function(document){
 
 	var selected, id = 'slick_uniqueid';
 	var testNode = document.createElement('div');
-	
+
 	var testRoot = document.body || document.getElementsByTagName('body')[0] || root;
 	testRoot.appendChild(testNode);
 
@@ -2155,7 +2162,7 @@ local.setDocument = function(document){
 
 			features.brokenGEBCN = cachedGetElementsByClassName || brokenSecondClassNameGEBCN;
 		}
-		
+
 		if (testNode.querySelectorAll){
 			// IE 8 returns closed nodes (EG:"</foo>") for querySelectorAll('*') for some documents
 			try {
@@ -2281,7 +2288,7 @@ var reSimpleSelector = /^([#.]?)((?:[\w-]+|\*))$/,
 local.search = function(context, expression, append, first){
 
 	var found = this.found = (first) ? null : (append || []);
-	
+
 	if (!context) return found;
 	else if (context.navigator) context = context.document; // Convert the node from a window to a document
 	else if (!context.nodeType) return found;
@@ -2384,7 +2391,11 @@ local.search = function(context, expression, append, first){
 			}
 
 			try {
-				if (first) return context.querySelector(_expression) || null;
+				if (context == null) {
+					qsaFailExpCache[expression] = 1;
+					break querySelector;
+				}
+				else if (first) return context.querySelector(_expression) || null;
 				else nodes = context.querySelectorAll(_expression);
 			} catch(e) {
 				qsaFailExpCache[expression] = 1;
@@ -2587,7 +2598,7 @@ local.matchNode = function(node, selector){
 			return this.nativeMatchesSelector.call(node, selector.replace(/\[([^=]+)=\s*([^'"\]]+?)\s*\]/g, '[$1="$2"]'));
 		} catch(matchError) {}
 	}
-	
+
 	var parsed = this.Slick.parse(selector);
 	if (!parsed) return true;
 
@@ -2666,7 +2677,7 @@ var combinators = {
 							this.push(item, tag, null, classes, attributes, pseudos);
 							break;
 						}
-					} 
+					}
 					return;
 				}
 				if (!item){
@@ -2875,7 +2886,7 @@ var pseudos = {
 	'root': function(node){
 		return (node === this.root);
 	},
-	
+
 	'selected': function(node){
 		return node.selected;
 	}
@@ -2904,7 +2915,7 @@ local.attributeGetters = {
 	'style': function(){
 		return (this.style) ? this.style.cssText : this.getAttribute('style');
 	},
-	
+
 	'tabindex': function(){
 		var attributeNode = this.getAttributeNode('tabindex');
 		return (attributeNode && attributeNode.specified) ? attributeNode.nodeValue : null;
@@ -3031,8 +3042,10 @@ var Element = function(tag, props){
 		var attributes = parsed.attributes;
 		if (attributes) for (var i = 0, l = attributes.length; i < l; i++){
 			var attr = attributes[i];
-			if (attr.value != null && attr.operator == '=' && props[attr.key] == null)
-				props[attr.key] = attr.value;
+			if (props[attr.key] != null) continue;
+
+			if (attr.value != null && attr.operator == '=') props[attr.key] = attr.value;
+			else if (!attr.value && !attr.operator) props[attr.key] = true;
 		}
 
 		if (parsed.classList && props['class'] == null) props['class'] = parsed.classList.join(' ');
@@ -3381,7 +3394,7 @@ var camels = ['defaultValue', 'accessKey', 'cellPadding', 'cellSpacing', 'colSpa
 	'rowSpan', 'tabIndex', 'useMap'
 ];
 var bools = ['compact', 'nowrap', 'ismap', 'declare', 'noshade', 'checked', 'disabled', 'readOnly', 'multiple', 'selected',
-	'noresize', 'defer', 'defaultChecked'
+	'noresize', 'defer', 'defaultChecked', 'autofocus'
 ];
  var attributes = {
 	'html': 'innerHTML',
@@ -3770,11 +3783,12 @@ Element.implement('hasChild', function(element){
 
 });
 
-// IE purge
+/*<ltIE9>*/
 if (window.attachEvent && !window.addEventListener) window.addListener('unload', function(){
 	Object.each(collected, clean);
 	if (window.CollectGarbage) CollectGarbage();
 });
+/*</ltIE9>*/
 
 })();
 
@@ -3810,6 +3824,7 @@ Element.Properties.tag = {
 
 };
 
+/*<ltIE9>*/
 (function(maxLength){
 	if (maxLength != null) Element.Properties.maxlength = Element.Properties.maxLength = {
 		get: function(){
@@ -3818,7 +3833,9 @@ Element.Properties.tag = {
 		}
 	};
 })(document.createElement('input').getAttribute('maxLength'));
+/*</ltIE9>*/
 
+/*<!webkit>*/
 Element.Properties.html = (function(){
 
 	var tableTest = Function.attempt(function(){
@@ -3855,6 +3872,7 @@ Element.Properties.html = (function(){
 
 	return html;
 })();
+/*</!webkit>*/
 
 
 /*
@@ -3889,7 +3907,8 @@ var setOpacity = function(element, opacity){
 	if (hasOpacity){
 		element.style.opacity = opacity;
 	} else {
-		opacity = (opacity == 1) ? '' : 'alpha(opacity=' + opacity * 100 + ')';
+		opacity = (opacity * 100).limit(0, 100).round();
+		opacity = (opacity == 100) ? '' : 'alpha(opacity=' + opacity + ')';
 		var filter = element.style.filter || element.getComputedStyle('filter') || '';
 		element.style.filter = reAlpha.test(filter) ? filter.replace(reAlpha, opacity) : filter + opacity;
 	}
@@ -3951,17 +3970,15 @@ Element.implement({
 		} else if (value == String(Number(value))){
 			value = Math.round(value);
 		}
-		if ((property == 'width' || property == 'height') && value.toString().indexOf('-') >= 0)
+		if ((property === 'width' || property === 'height') && value.toString().indexOf('-') >= 0)
 		{
 			// [i_a] don't set a negative width or height: MSIE6 croaks!
-			//debugger;
 			this.style[property] = '0px';
 			return this;
 		}
-		else if (property == 'zIndex' && value == 'auto')
+		else if (property === 'zIndex' && value === 'auto')
 		{
 			// [i_a] MSIE6 croaks on this one; set to nil instead
-			//debugger;
 			this.style[property] = '';
 			return this;
 		}

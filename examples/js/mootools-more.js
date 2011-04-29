@@ -28,8 +28,8 @@ provides: [MooTools.More]
 */
 
 MooTools.More = {
-	'version': '1.3.1.2dev',
-	'build': '363ba68900720e2cc5bc3bca2da737c672583e46'
+	'version': '1.3.2.2dev',
+	'build': 'b6dcbdcc821fbf62404ef43f332f5c594ac76a3a'
 };
 
 
@@ -1556,22 +1556,13 @@ Locale.define('en-US', 'Number', {
 
 /*
 ---
-
 name: Number.Format
-
 description: Extends the Number Type object to include a number formatting method.
-
 license: MIT-style license
-
-authors:
-  - Arian Stolwijk
-
-requires:
-  - Core/Number
-  - Locale.en-US.Number
-
-provides: [Number.Extras]
-
+authors: [Arian Stolwijk]
+requires: [Core/Number, Locale.en-US.Number]
+# Number.Extras is for compatibility
+provides: [Number.Format, Number.Extras]
 ...
 */
 
@@ -2680,9 +2671,9 @@ var formObserver = function(eventName){
 				forms = this.retrieve($delegationKey + 'forms', []),
 				target = event.target,
 				form = (target.get('tag') == 'form') ? target : event.target.getParent('form');
-				
+
 			if (!form) return;
-				
+
 			var formEvents = form.retrieve($delegationKey + 'originalFn', []),
 				formListeners = form.retrieve($delegationKey + 'listeners', []),
 				self = this;
@@ -6368,7 +6359,7 @@ Fx.Slide = new Class({
 
 		this.addEvent('complete', function(){
 			this.open = (wrapper['offset' + this.layout.capitalize()] != 0);
-			if (this.open && options.resetHeight) wrapper.setStyle('height', '');
+			if (this.open && this.options.resetHeight) wrapper.setStyle('height', '');
 		}, true);
 	},
 
@@ -8476,7 +8467,7 @@ var Table = this.Table = function(){
 	this.length = 0;
 	var keys = [],
 	    values = [];
-	
+
 	this.set = function(key, value){
 		var index = keys.indexOf(key);
 		if (index == -1){
@@ -8508,7 +8499,7 @@ var Table = this.Table = function(){
 	this.each = this.forEach = function(fn, bind){
 		for (var i = 0, l = this.length; i < l; i++) fn.call(bind, keys[i], values[i], this);
 	};
-	
+
 };
 
 if (this.Type) new Type('Table', Table);
@@ -9723,7 +9714,7 @@ HtmlTable = Class.refactor(HtmlTable, {
 					clearTimeout(timer);
 					held = false;
 				};
-				
+
 				this.keyboard.addEvents({
 					'keydown:shift+up': move(-1),
 					'keydown:shift+down': move(1),
