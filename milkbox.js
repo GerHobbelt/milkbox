@@ -1333,13 +1333,15 @@ var MilkboxGallery = new Class({
 
 
 
-//Creating Milkbox instance: you can comment this code out and instantiate Milkbox somewhere else instead.
-window.addEvent('domready', function(){
-	this.milkbox = new Milkbox({
-		centered:false
+// Creating Milkbox instance: set __MILKBOX_NO_AUTOINIT__ to instantiate Milkbox somewhere else instead.
+if (typeof __MILKBOX_NO_AUTOINIT__ === 'undefined')
+{
+	window.addEvent('domready', function(){
+		this.milkbox = new Milkbox({
+			centered:false
+		});
 	});
-});
-
+}
 
 /*
 jsLint settings:
