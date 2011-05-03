@@ -252,17 +252,25 @@ this.Milkbox = new Class({
 	//to prevent the loader to show if the file is cached
 	startLoadingCheck:function(){
 		var t = 0;
-		this.loadCheckerId = (function(){
-			t+=1;
-			if(t > 5){
-				this.display.show_loader();
-				this.stopLoadingCheck();
-			}
-		}).periodical(100,this);
+		if (!this.loadCheckerId)
+		{
+			this.loadCheckerId = (function(){
+				t+=1;
+				if(t > 5){
+					if (this.loadCheckerId)
+					{
+						// only show the loader when the timer has not been cleared yet!
+						this.display.show_loader();
+					}
+					this.stopLoadingCheck();
+				}
+			}).periodical(100,this);
+		}
 	},
 
 	stopLoadingCheck:function(){
 		clearInterval(this.loadCheckerId);
+		this.loadCheckerId = null;
 	},
 
 	preloadFiles:function(preloads){
