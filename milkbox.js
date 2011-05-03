@@ -31,6 +31,9 @@ this.Milkbox = new Class({
 		removeTitle:true,
 		autoSize:true,
 		autoSizeMaxHeight:0,//only if autoSize==true
+		autoSizeMaxWidth:0,//only if autoSize==true
+		autoSizeMinHeight:0,//only if autoSize==true
+		autoSizeMinWidth:0,//only if autoSize==true
 		centered:false,
 		imageOfText:'of',
 		onXmlGalleries:function(){},
@@ -553,6 +556,9 @@ this.Milkbox = new Class({
 			centered:this.options.centered,
 			auto_size:this.options.autoSize,
 			autosize_max_height:this.options.autoSizeMaxHeight,
+			autosize_max_width:this.options.autoSizeMaxWidth,
+			autosize_min_height:this.options.autoSizeMinHeight,
+			autosize_min_width:this.options.autoSizeMinWidth,
 			image_of_text:this.options.imageOfText
 		});
 	},
@@ -731,6 +737,9 @@ var MilkboxDisplay= new Class({
 		centered:false,
 		auto_size:false,
 		autosize_max_height:0,
+		autosize_max_width:0,
+		autosize_min_height:0,
+		autosize_min_width:0,
 		fixup_dimension:true,
 		image_of_text:'of',
 		zIndex: 410000,  // required to be a high number > 400000 as the 'filemanager as tinyMCE plugin' sits at z-index 400K+
@@ -898,8 +907,14 @@ var MilkboxDisplay= new Class({
 					//console.log('resize_fx start');
 				},
 				onComplete:function(){
+					var w, h;
+					w = this.current_file.width;
+					h = this.current_file.height;
+					if (w < this.options.autosize_min_width) w = this.options.autosize_min_width;
+					if (h < this.options.autosize_min_height) h = this.options.autosize_min_height;
 					this.show_bottom();
-					this.filebox.setStyle('height',this.current_file.height+'px');
+					this.filebox.setStyle('width', w+'px');
+					this.filebox.setStyle('height', h+'px');
 					this.filebox.setStyle('opacity',0).grab(this.current_file).tween('opacity',1);
 					this.fireEvent('resizeComplete');
 				}.bind(this)
@@ -952,6 +967,26 @@ var MilkboxDisplay= new Class({
 			};
 			file.set({ 'width':file_size.w.toInt(), 'height':file_size.h.toInt() });
 		}
+
+		if(this.options.autosize_min_height > file_size.h){
+			var mt = Math.round((this.options.autosize_min_height - file_size.h) / 2);
+			var mb = this.options.autosize_min_height - file_size.h - mt;
+			file.setStyles({
+				'margin-top': mt,	// no need to say "+'px'": mootools takes care of that!
+				'margin-bottom': mb
+			});
+			file_size.h = this.options.autosize_min_height;
+		}
+		if(this.options.autosize_min_width > file_size.w){
+			var ml = Math.round((this.options.autosize_min_width - file_size.w) / 2);
+			var mr = this.options.autosize_min_width - file_size.w - ml;
+			file.setStyles({
+				'margin-left': ml,
+				'margin-right': mr
+			});
+			file_size.w = this.options.autosize_min_width;
+		}
+
 		file_size = Object.map(file_size,function(value){
 			return value.toInt();
 		});
@@ -1013,22 +1048,28 @@ var MilkboxDisplay= new Class({
 		ratio = (ratio <= 1 ? ratio : 1);
 
 		i_size = Object.map(i_size,function(value){
-			return Math.floor(value*ratio);
+			return value*ratio;
 		});
 
 		ratio = (max_size[check]/i_size[check] <= 1 ? max_size[check]/i_size[check] : 1);
 		i_size = Object.map(i_size,function(value){
-			return Math.floor(value*ratio);
+			return value*ratio;
 		});
 
 		if(this.options.autosize_max_height > 0){
-			ratio = (this.options.autosize_max_height/i_size.height < 1 ? this.options.autosize_max_height/i_size.height : 1);
+			ratio = (this.options.autosize_max_height/i_size.h < 1 ? this.options.autosize_max_height/i_size.h : 1);
 			i_size = Object.map(i_size,function(value){
-				return Math.floor(value*ratio);
+				return value*ratio;
+			});
+		}
+		if(this.options.autosize_max_width > 0){
+			ratio = (this.options.autosize_max_width/i_size.w < 1 ? this.options.autosize_max_width/i_size.w : 1);
+			i_size = Object.map(i_size,function(value){
+				return value*ratio;
 			});
 		}
 
-		image.set({ 'width':i_size.w, 'height':i_size.h });
+		image.set({ 'width': Math.round(i_size.w), 'height': Math.round(i_size.h) });
 
 		return image;
 	},//get_resized_image
