@@ -572,7 +572,12 @@ this.Milkbox = new Class({
 			return;
 		}
 
-		this.formElements = this.formElements.map(function(elem){
+		// [i_a] only process the form elements which are actually VISIBLE; if we do them all, it nukes all dynamically shown/hidden forms on the page.
+		this.formElements = this.formElements.filter(function(elem){
+			var vis = elem.getStyle('visibility');
+			var dis = elem.getStyle('display');
+			return (dis !== 'none' && vis !== 'hidden');
+		}).map(function(elem){
 			elem.store('visibility',elem.getStyle('visibility'));
 			elem.store('display',elem.getStyle('display'));
 			return elem;
