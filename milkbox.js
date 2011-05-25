@@ -28,7 +28,6 @@ this.Milkbox = new Class({
 		resizeTransition:'sine:in:out',/*function (ex. Transitions.Sine.easeIn) or string (ex. 'bounce:out')*/
 		autoPlay:false,
 		autoPlayDelay:7,
-		removeTitle:true,
 		autoSize:true,
 		autoSizeMaxHeight:0,//only if autoSize==true
 		autoSizeMaxWidth:0,//only if autoSize==true
@@ -721,7 +720,7 @@ this.Milkbox = new Class({
 
 
 
-var MilkboxDisplay= new Class({
+var MilkboxDisplay = new Class({
 
 	Implements:[Options,Events],
 
