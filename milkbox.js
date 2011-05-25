@@ -499,10 +499,14 @@ this.Milkbox = new Class({
 			};
 
 			var links = xml_gallery.getChildren('a').map(function(tag){
+				var caption = tag.get('title');
+				if (tag.get('caption_is_encoded_html')) {
+					caption = MilkboxGallery.decodeHTMLfromAttr(caption);
+				}
 				return {
 					href:tag.href,
 					size:tag.get('data-milkbox-size'),
-					title:tag.get('title')
+					title:caption
 				};
 			},this);
 
@@ -709,8 +713,6 @@ this.Milkbox = new Class({
 
 		this.loadFile(this.currentGallery.get_item(i1),[this.currentGallery.get_item(i2)]);
 	}
-
-
 });//END MILKBOX CLASS CODE
 
 })();//END SINGLETON CODE
@@ -1273,13 +1275,23 @@ var MilkboxGallery = new Class({
 
 		this.items = this.items.map(function(item){
 			var splitted_url = item.href.split('?');
+			var size_string;
 			var output = {};
 			output.element = (typeOf(item) === 'element' ? item : null);
 			output.href = splitted_url[0];
 			output.vars = (splitted_url[1] ? splitted_url[1].parseQueryString() : null);
 			output.size = null;
-			output.caption = (output.element ? output.element.get('title') : item.title);
-			var size_string = (output.element ? output.element.get('data-milkbox-size') : item.size);
+			if (output.element) {
+				output.caption = output.element.get('title');
+				if (output.element.get('data-milkbox-caption-is-encoded-html')) {
+					output.caption = this.decodeHTMLfromAttr(output.caption);
+				}
+				size_string = output.element.get('data-milkbox-size');
+			}
+			else {
+				output.caption = item.title;
+				size_string = item.size;
+			}
 			if(size_string){
 				output.size = Object.map(this.get_item_props(size_string),function(value,key){
 					return value.toInt();
@@ -1326,6 +1338,16 @@ var MilkboxGallery = new Class({
 	clear:function(){
 		this.source = null;
 		this.items = null;
+	},
+
+	// undo the HTML encoding done to allow arbitrary HTML to be placed in a tag attribute:
+	decodeHTMLfromAttr: function(str) {
+		return (''+str).replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+	},
+
+	// utility for external use: the reverse of decodeHTMLfromAttr()
+	encodeHTMLforAttr: function(str) {
+		return (''+str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 	}
 
 });//end MilkboxGallery
