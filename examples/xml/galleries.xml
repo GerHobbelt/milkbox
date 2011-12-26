@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <div id="galleries">
 	<div class="gallery" name="xmlG1" autoplay="true" autoplay_delay="7" >
+		<a href="swf/logo.swf" data-milkbox-size="width:600,height:200" title="Lorem ipsum..." />
 		<a href="swf/testswf1.swf" data-milkbox-size="width:550, height:400" title="Lorem ipsum..." />
 		<a href="swf/testswf2.swf" data-milkbox-size="width:650, height:250" title="And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it from the caption. And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it." />
 		<a href="img/01b.jpg" title="Lorem ipsum..." />
@@ -10,6 +11,7 @@
 	<div class="gallery" name="xmlG2" autoplay="true" autoplay_delay="6" >
 		<a href="img/01b.jpg" title="Lorem ipsum..." />
 		<a href="img/03b.jpg" title="Lorem &lt;a href=#&gt;ipsum...&lt;/a&gt;" />
+		<a href="swf/logo.swf" data-milkbox-size="width:600,height:200" title="Lorem ipsum..." />
 		<a href="swf/testswf1.swf" data-milkbox-size="width:550, height:400" title="Lorem ipsum..." />
 		<a href="swf/testswf2.swf" data-milkbox-size="width:650, height:250" title="And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it from the caption. And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it." />
 	</div>

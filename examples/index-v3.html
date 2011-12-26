@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Milkbox - Lightbox for Mootools 1.3.x</title>
+<title>Milkbox - Lightbox for Mootools</title>
 
 	<link rel="stylesheet" href="css/default.css" type="text/css" />
 	<link rel="stylesheet" href="css/main.css" type="text/css" />
@@ -31,9 +31,12 @@
 			
 			addJsonGalleries = function(){
 			
+				//add 3 json galleries
 				milkbox.addGalleries([
 					{ name:'obj-gall1', autoplay:true, autoplay_delay:4, files:[ { href:'img/01b.jpg', title:'Test title' }, { href:'swf/testswf1.swf?var1=yellow&var2=300', size:"width:550, height:400" } ]},
+					
 					{ name:'obj-gall2', autoplay_delay:9, files:[ { href:'swf/testswf2.swf?var1=ultex&var2=30', size:"width:400, height:300" }, { href:'swf/testswf1.swf', size:"width:550, height:400" } ]},
+					
 					{ name:'obj-gall3', files:[ { href:'img/croda-b.jpg' }, { href:'img/ska-b.jpg' } ]}
 				]);
 			
@@ -68,50 +71,56 @@
 	<div id="box">	
 		<table id="gallery" style="margin-top:20px; ">
 			<tr>
-				<td><a href="img/01b.jpg" data-milkbox="gall1" title="Lorem ipsum..."><img src="img/01.jpg" alt="" width="100" height="100" /></a></td>
-				<td><a href="img/ska-b.jpg" data-milkbox="gall1" ><img src="img/ska.jpg" alt="" width="100" height="100" /></a></td>
-				<td><a href="img/croda-b.jpg" data-milkbox="gall1" title="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"><img src="img/croda.jpg" alt="" width="100" height="100" /></a></td>
-				<td style="width:100px"><a href="html-external/external.html?var1=ext1" data-milkbox="gall1" data-milkbox-size="width:600, height:350" title="Html file: loaded in iframe element."><img src="img/logo.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="img/01b.jpg" data-milkbox="milkbox:g1" title="Lorem ipsum..."><img src="img/01.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="img/ska-b.jpg" data-milkbox="milkbox:g1" ><img src="img/ska.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="img/croda-b.jpg" data-milkbox="milkbox:g1" title="There's an auto-sizing border-left in the nav section, that help to visually separate it from the caption. &lt;a href=#&gt;This is a link&lt;/a&gt;, use html entities and no quotes to write links in the title property. "><img src="img/croda.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="html-external/external.html?var1=ext1" data-milkbox="milkbox:g1" data-milkbox-size="width:600, height:450" title="HTML page in iframe"><img src="img/html.png" alt="" width="100" height="100" /></a></td>
+				<td style="width:100px"><a href="swf/logo.swf" data-milkbox="milkbox:g1" data-milkbox-size="width:600,height:200" title="This is an Swf file. You need Flash Player 10 to see it correctly"><img src="img/logo.jpg" alt="" width="100" height="100" /></a></td>
 			</tr>
 			<tr>
-				<td colspan="4" style="height:50px"></td>
+				<td colspan="5" style="height:50px"></td>
 			</tr>
 			<tr>
-				<td><a href="img/01b.jpg" data-milkbox="gall2" title="Lorem ipsum..."><img src="img/01.jpg" alt="" width="100" height="100" /></a></td>
-				<td><a href="swf/testswf1.swf" data-milkbox="gall2" data-milkbox-size="width:550, height:400"  title="Lorem ipsum..."><img src="img/02.jpg" alt="" width="100" height="100" /></a></td>
-				<td><a href="img/lariceto.jpg" data-milkbox="gall2" data-milkbox-size="width:650, height:250" title="And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it from the caption. And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it from the ca"><img src="img/04.jpg" alt="" width="100" height="100" /></a></td>
-				<td style="width:100px"><a href="img/03b.jpg" data-milkbox="gall2" title="Lorem &lt;a href=#&gt;ipsum...&lt;/a&gt;"><img src="img/03.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="img/01b.jpg" data-milkbox="milkbox:g2" title="Lorem ipsum..."><img src="img/01.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="swf/testswf1.swf" data-milkbox="milkbox:g2" data-milkbox-size="width:550, height:400"  title="Lorem ipsum..."><img src="img/02.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="swf/testswf2.swf" data-milkbox="milkbox:g2" data-milkbox-size="width:650, height:250"  title="Lorem ipsum #2..."><img src="img/02.jpg" alt="" width="100" height="100" /></a></td>
+				<td><a href="img/lariceto.jpg" data-milkbox="milkbox:g2" data-milkbox-size="width:650, height:250" title="And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it from the caption. And last but not least, there's an auto-sizing border-left in the nav section, that help to visually separate it from the ca"><img src="img/04.jpg" alt="" width="100" height="100" /></a></td>
+				<td style="width:100px"><a href="img/03b.jpg" data-milkbox="milkbox:g2" title="Lorem &lt;a href=#&gt;ipsum...&lt;/a&gt;"><img src="img/03.jpg" alt="" width="100" height="100" /></a></td>
 			</tr>
 		</table>
 
 		<br /><br />
-		<a href="swf/testswf1.swf" title="singolo 1" data-milkbox="single" data-milkbox-size="width:650, height:250">link singolo 1 swf</a> // 
-		<a href="img/02b.jpg" title="singolo 2" data-milkbox="single">link singolo 2 jpg</a>
+		<a href="swf/testswf1.swf" title="single swf" data-milkbox="single" data-milkbox-size="width:650, height:250">Link to a single swf file</a>
+		<br />
+		<a href="img/02b.jpg" title="single jpg" data-milkbox="single">Link to a single jpg file</a>
 		<br /><br />
 		<a href="html-external/external.html?var1=ext1" title="Html file loaded in iFrame" data-milkbox="html">Html test 1</a> // 
 		<a href="html-external/external2.html" title="Html file loaded in iFrame" data-milkbox="html" data-milkbox-size="width:600, height:300">Html test 2</a>
 
 		<br /><br /><br />
-		<a href="#" onclick="if (!milkbox.open('obj-gall1',1)) { alert('gallery {obj-gall1} is not available, run {add JSON galleries} first!'); } return false;">test milkbox.open (gallery 1)</a> //
+		<a href="#" onclick="if (!milkbox.open('obj-gall1',1)) { alert('gallery {obj-gall1} is not available, run {add JSON galleries} first!'); } return false;">test milkbox.open (gallery 1): Open a json gallery (add the galleries first!)</a> //
 		<a href="#" onclick="if (!milkbox.open('obj-gall2',1)) { alert('gallery {obj-gall2} is not available, run {add JSON galleries} first!'); } return false;">test milkbox.open (gallery 2)</a> //
 		<a href="#" onclick="if (!milkbox.open('obj-gall3',1)) { alert('gallery {obj-gall3} is not available, run {add JSON galleries} first!'); } return false;">test milkbox.open (gallery 3)</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.setAutoPlay([{ gallery:'gall1', autoplay:true, delay:6 },{ gallery:'htmlgallery', autoplay:true, delay:10 } ]); return false;">test milkbox.setAutoPlay</a>
+		<a href="#" onclick="milkbox.setAutoPlay([{ gallery:'gall1', autoplay:true, delay:6 },{ gallery:'htmlgallery', autoplay:true, delay:10 } ]); return false;">milkbox.setAutoPlay on the first thumb gallery (gall1)</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.openWithFile({ href:'img/01b.jpg', title:'Test openWithFile'}); return false;">milkbox.openWithFile</a>
+		<a href="#" onclick="milkbox.openWithFile({ href:'img/01b.jpg', title:'Test openWithFile with some layout and transitions tweaks'}, {overlayOpacity:1, fileboxBorderWidth:'10px', fileboxBorderColor:'#ff0000', resizeDuration:1, resizeTransition:'bounce:out', centered:true}); return false;">milkbox.openWithFile, with some customizations..</a>
 		<br /><br />
-		<a href="#" onclick="addJsonGalleries(); return false;">add json galleries</a>
+		<a href="#" onclick="addJsonGalleries(); return false;">Add json galleries</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.addGalleries('xml/galleries.xml'); return false;">add xml galleries</a>
+		<a href="#" onclick="milkbox.addGalleries('xml/galleries.xml'); return false;">Add some xml galleries (works only on a web server, not locally)</a>
 		<br /><br />
 		<a href="#" onclick="if (!milkbox.open('json3',0)) { alert('gallery {json3} is not available, run {resetExternalGalleries} first!'); } return false;">show json EXTERNAL gallery</a>
 		<br /><br />
-		<a href="#" onclick="milkbox.open('xmlG1',0); return false;">show xml galleries</a>
+		<a href="#" onclick="milkbox.open('xmlG1',0); return false;">Show an xml gallery (add the galleries first!)</a>
+		<br /><br />
+		<a href="#" onclick="milkbox.refreshDisplay({overlayOpacity:1, fileboxBorderWidth:'5px', fileboxBorderColor:'#00ff00', fileboxPadding:'5px', centered:false, resizeTransition:'quint:in', resizeDuration:2}, true); return false;">refreshDisplay test (open one of the galleries after clicking here)</a>
 		<br /><br />
 		<a href="#" onclick="milkbox.reloadPageGalleries(); return false;">reloadPageGalleries</a>
 		<br /><br />
 		<a href="#" onclick="milkbox.resetExternalGalleries([json3]); return false;">resetExternalGalleries</a>
 		<br /><br />
+		Scroll down for another test, with this page scrolled.
 		<br /><br />
 		<br /><br />
 		<br /><br />

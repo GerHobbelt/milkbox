@@ -1,5 +1,5 @@
 body{ 
-	background-color:#eee; 
+	background-color:#333; 
 	color:#777;
 	font:normal 14px verdana, sans-serif;
 	line-height:21px;
@@ -33,7 +33,7 @@ li{ padding:0px; margin-bottom:10px; }
 #components, .customization{ margin:10px 0 0 25px; }
 #components li, .customization li{ margin-bottom:3px; }
 
-#gallery{ width:100%; }
+#gallery{ margin-top:20px; width:100%; }
 
 #gallery img{ border: 5px solid #78c7f2; }
 

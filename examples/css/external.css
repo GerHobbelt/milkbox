@@ -9,15 +9,24 @@ body{
 	margin:0 auto; 
 	padding:0 0 50px 0; 
 	width:600px; 
-	background-color:#030; 
+	background-color: #F28E00; 
 }
+
+#test-box{
+	background-color: #78C7F2;
+	padding:10px 0 0 10px;
+	font-size:14px;
+	width:590px;
+	height:390px;
+}
+
 
 h1,h2{ 
 	font:bold 20px 'Lucida Grande', 'Trebuchet MS', sans-serif;
 	margin-top:25px; 
 }
 
-h1{ color: #fff; font-size:24px; margin-bottom:36px; }
+h1{ font-size:24px; margin-bottom:36px; }
 h2{ color:#f2aa24; margin-bottom:15px; }
 
 .orange{ color:#f2aa24; }
@@ -37,10 +46,4 @@ li{ padding:0px; margin-bottom:10px; }
 	color:#6C0;
 }
 
-#test-box{
-	background-color: #fff;
-	color: red;
-	width:600px;
-	height:400px;
-}
 
