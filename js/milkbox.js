@@ -1049,12 +1049,12 @@ var MilkboxDisplay = new Class({
 		this.caption.innerHTML = (caption ? caption : '');
 		this.update_count(index,length);
 
-		var filebox_addsize = this.filebox.getStyle('border-width').toInt()*2+this.filebox.getStyle('padding').toInt()*2;
-		var final_w = file_size.w+filebox_addsize;
+		var filebox_addsize = this.filebox.getStyle('border-width').toInt() * 2 + this.filebox.getStyle('padding').toInt() * 2;
+		var final_w = file_size.w + filebox_addsize;
 
 		//so now I can predict the caption height
 		var caption_adds = this.caption.getStyles('padding-right','margin-right');
-		this.caption.setStyle('width',final_w-caption_adds.paddingRight.toInt()-caption_adds.marginRight.toInt());
+		this.caption.setStyle('width',final_w - caption_adds['padding-right'].toInt() - caption_adds['margin-right'].toInt());
 		$$(this.bottom,this.controls).setStyle('height',Math.max(this.caption.getDimensions().height,this.controls.getComputedSize().totalHeight));
 		var mainbox_size = this.mainbox.getComputedSize();
 
