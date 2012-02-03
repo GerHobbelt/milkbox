@@ -89,7 +89,7 @@ this.Milkbox = new Class({
 	},
 
 	//utility
-	open:function(gallery,index){
+	open:function(gallery,index,options){
 		var i;
 
 		if(!this.activated){
@@ -99,6 +99,10 @@ this.Milkbox = new Class({
 		var g = (instanceOf(gallery,MilkboxGallery) ? gallery : this.getGallery(gallery));
 		if(!g) {
 			return false;
+		}
+
+		if(options){
+			this.refreshDisplay(options,true);//set custom options
 		}
 
 		// [i_a] when 'index' is not an number, it may be a element reference or string: resolve such indexes too
@@ -115,7 +119,7 @@ this.Milkbox = new Class({
 		}
 
 		this.closed = false;
-		var item = g.get_item(i);   // [i_a] index is undefined
+		var item = g.get_item(i);
 		if(!item) {
 			return false;
 		}
@@ -127,7 +131,6 @@ this.Milkbox = new Class({
 
 		this.display.set_mode(this.currentGallery.type);
 		this.display.appear();
-
 
 		if(this.options.autoPlay || g.options.autoplay){
 			this.startAutoPlay(true);
@@ -586,7 +589,7 @@ this.Milkbox = new Class({
 
 		var options_bkup = this.display.options;//save original options
 		var new_options = Object.merge({},options_bkup,options);
-		if(this.display){ this.display.clear() }
+		if(this.display){ this.display.clear(); }
 		this.display = new MilkboxDisplay(new_options);
 		this.addDisplayEvents();
 
