@@ -1,5 +1,5 @@
 /*
-	Milkbox v3.0.2 - required: mootools.js v1.3 core + more (see the relative js file for details about used modules)
+	Milkbox v3.0.3 - required: mootools.js v1.3 core + more (see the relative js file for details about used modules)
 
 	by Luca Reghellin (http://www.reghellin.com) September 2011, MIT-style license.
 	Inspiration Lokesh Dhakar (http://www.lokeshdhakar.com/projects/lightbox2/)
@@ -125,7 +125,7 @@ this.Milkbox = new Class({
 		}
 
 		this.currentGallery = g;
-		this.currentIndex = i;      // [i_a]
+		this.currentIndex = i;
 
 		this.hideFormElements();
 
@@ -157,7 +157,7 @@ this.Milkbox = new Class({
 		this.fileReady = false;
 		this.closed = true;
 
-		this.fireEvent('close');
+		this.fireEvent('closed');
 	},
 
 	startAutoPlay:function(opening){
@@ -258,7 +258,7 @@ this.Milkbox = new Class({
 		if(!this.checkFileType(fileObj,'swf')) {
 			this.startLoadingCheck();
 		}
-		if(preloads){
+		if(preloads) {
 			this.preloadFiles(preloads);
 		}
 	},
@@ -266,13 +266,11 @@ this.Milkbox = new Class({
 	//to prevent the loader to show if the file is cached
 	startLoadingCheck:function(){
 		var t = 0;
-		if (!this.loadCheckerId)
-		{
+		if (!this.loadCheckerId) {
 			this.loadCheckerId = (function(){
 				t+=1;
 				if(t > 5){
-					if (this.loadCheckerId)
-					{
+					if (this.loadCheckerId) {
 						// only show the loader when the timer has not been cleared yet!
 						this.display.show_loader();
 					}
@@ -335,13 +333,13 @@ this.Milkbox = new Class({
 	loadHtml:function(fileObj){
 
 		var query = (fileObj.vars ? '?' + Object.toQueryString(fileObj.vars) : '');
+		var extras = (fileObj.extras ? fileObj.extras : '');
 
 		var iFrame = new Element('iframe',{
 			src:fileObj.href+query,
 			frameborder:0,//for IE...
 			styles:{
-				'border-style':'solid',
-				'border-width':'0px'
+				'border':'none'
 			}
 		});
 
@@ -369,7 +367,7 @@ this.Milkbox = new Class({
 
 		var timer; // split due to jsLint: Problem at line 338 character 31: 'timer' has not been fully defined yet.
 		timer = (function(){
-			if(this.display.ready){
+			if(this.display.ready) {
 				if (this.currentGallery.items != null) {
 					this.display.show_file(file,caption,this.currentIndex+1,this.currentGallery.items.length);
 				}
@@ -426,7 +424,8 @@ this.Milkbox = new Class({
 					autoplay:this.options.autoPlay,
 					autoplay_delay:this.options.autoPlayDelay
 				});
-			});
+				g.refresh();
+			}.bind(this));
 		}
 
 		//console.log(this.galleries);
@@ -716,17 +715,21 @@ this.Milkbox = new Class({
 			case 'right':
 			case 'space':
 				e.preventDefault();
-				this.navAux(e,'next');
+				if(this.display.type != 'single') {
+					this.navAux(e,'next');
+				}
 				break;
 
 			case 'left':
 				e.preventDefault();
-				this.navAux(e,'prev');
+				if(this.display.type != 'single') {
+					this.navAux(e,'prev');
+				}
 				break;
 
 			case 'esc':
 				e.stop();
-				this.display.disappear(); // this.close(true);
+				this.display.disappear();
 				break;
 			}
 		}.bind(this));
@@ -880,7 +883,7 @@ var MilkboxDisplay = new Class({
 		}).inject(this.mainbox);
 
 		this.bottom = new Element('div#mbox-bottom').setStyle('visibility','hidden').inject(this.mainbox);
-		this.controls = new Element('div#mbox-controls'); //.setStyle('visibility','hidden');
+		this.controls = new Element('div#mbox-controls');
 		this.caption = new Element('div#mbox-caption',{'html':'test'}).setStyle('display','none');
 
 		this.bottom.adopt(new Element('div.mbox-reset'),this.controls, this.caption, new Element('div.mbox-reset'));
@@ -891,7 +894,6 @@ var MilkboxDisplay = new Class({
 		this.playpause = new Element('div#mbox-playpause');
 		this.count = new Element('div#mbox-count');
 
-		//$$(this.next, this.prev, this.count, this.playpause).setStyle('display','none');
 		$$(this.next, this.prev, this.close, this.playpause).setStyles({
 			'outline':'none',
 			'cursor':'pointer'
@@ -1263,8 +1265,10 @@ var MilkboxDisplay = new Class({
 			//resize only if visible
 			return;
 		}
-		var h = window.getSize().y;
-		this.overlay.setStyles({ 'height':h });
+		//var h = window.getSize().y;
+		var h = window.getScrollSize().y + window.getScroll().y;
+
+		this.overlay.setStyles({ 'height':h, 'top':-window.getScroll().y });
 	},
 
 	clear:function(){
@@ -1377,6 +1381,10 @@ var MilkboxGallery = new Class({
 					return value.toInt();
 				});
 			}
+
+			var extras = (output.element) ? output.element.get('data-milkbox-extras') : item.extras;
+			output.extras = (extras) ? extras : '';
+
 			return output;
 		},this);
 
