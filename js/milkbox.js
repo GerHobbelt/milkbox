@@ -1059,7 +1059,27 @@ var MilkboxDisplay = new Class({
 
 		//so now I can predict the caption height
 		var caption_adds = this.caption.getStyles('padding-right','margin-right');
-		this.caption.setStyle('width',final_w - caption_adds['padding-right'].toInt() - caption_adds['margin-right'].toInt());
+		console.log("caption width calculatie: ", final_w, caption_adds['padding-right'].toInt(), caption_adds['margin-right'].toInt(), final_w - caption_adds['padding-right'].toInt() - caption_adds['margin-right'].toInt(), " ---- ", file_size.w, filebox_addsize, this.filebox.getStyle('border-width').toInt(), this.filebox.getStyle('padding').toInt());
+
+		/*
+		 -1 correction to fix issue: mootools doesn't support fractional sizes as reported by FireFox in zoomed mode.
+		 
+		 Reproduce issue: Ctrl-scrollwheel in FireFox to see render at various zoom level; smaller zoom levels will report a border-left 
+		 for the controls of less than 1px, e.g. 0.916px and /that/ will be treated by mootools (More: getComputedSize()) as 0px instead of 1px!
+		 
+		 The -1 correction is a 'somewhat safe bet' and case specific; theoretically, at particular zoom levels, the -1px correction here 
+		 will _still_ not cover the collective fractional round-down issues for the controls, thus leaving you with a corrupted rendering
+		 of the milkbox caption: it will show 'empty' as the sum of the calculated widths will overshoot the parent width then.
+		 For now, the -1px 'hack' should suffice in FF practice.
+		 
+		 Edit: testing reveals that the theory is correct and shows up at zoom levels ~ .7; hence the 'hack' is made more tolerant by making it 2px.
+		 
+		 More info: 
+		 
+		 http://htmldoodads.appspot.com/zoom-level.html
+		 http://stackoverflow.com/questions/1713771/how-to-detect-page-zoom-level-in-all-modern-browsers
+		 */
+		this.caption.setStyle('width', final_w - caption_adds['padding-right'].toInt() - caption_adds['margin-right'].toInt() - 2);
 		$$(this.bottom,this.controls).setStyle('height',Math.max(this.caption.getDimensions().height,this.controls.getComputedSize().totalHeight));
 		var mainbox_size = this.mainbox.getComputedSize();
 
@@ -1248,6 +1268,7 @@ var MilkboxDisplay = new Class({
 		}
 
 		this.caption.setStyle('margin-right',this.controls.getComputedSize().totalWidth);
+		console.log('set caption margin right: ', this.controls.getComputedSize().totalWidth);
 	},//end set_mode
 
 	set_paused:function(paused){
