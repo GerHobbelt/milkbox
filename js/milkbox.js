@@ -1,5 +1,5 @@
 /*
-	Milkbox v3.0.3 - required: mootools.js v1.3 core + more (see the relative js file for details about used modules)
+	Milkbox v3.0.3v2 - required: mootools.js v1.3 core + more (see the relative js file for details about used modules)
 
 	by Luca Reghellin (http://www.reghellin.com) September 2011, MIT-style license.
 	Inspiration Lokesh Dhakar (http://www.lokeshdhakar.com/projects/lightbox2/)
@@ -380,8 +380,15 @@ this.Milkbox = new Class({
 
 	checkFileType:function(file,type){
 		var href = (typeOf(file) !== 'string' ? file.href : file);
+		var splitted = href.split('?')[0];
 		var regexp = new RegExp('\\.('+type+')$','i');
-		return href.split('?')[0].test(regexp);
+		var test = splitted.test(regexp);
+
+		if(!test && type == "html"){
+			test = splitted.test(/\/\d+$/);
+		}
+
+		return test;
 	},
 
 	//GALLERIES
@@ -1059,23 +1066,23 @@ var MilkboxDisplay = new Class({
 
 		//so now I can predict the caption height
 		var caption_adds = this.caption.getStyles('padding-right','margin-right');
-		console.log("caption width calculatie: ", final_w, caption_adds['padding-right'].toInt(), caption_adds['margin-right'].toInt(), final_w - caption_adds['padding-right'].toInt() - caption_adds['margin-right'].toInt(), " ---- ", file_size.w, filebox_addsize, this.filebox.getStyle('border-width').toInt(), this.filebox.getStyle('padding').toInt());
+		//console.log("caption width calculatie: ", final_w, caption_adds['padding-right'].toInt(), caption_adds['margin-right'].toInt(), final_w - caption_adds['padding-right'].toInt() - caption_adds['margin-right'].toInt(), " ---- ", file_size.w, filebox_addsize, this.filebox.getStyle('border-width').toInt(), this.filebox.getStyle('padding').toInt());
 
 		/*
 		 -1 correction to fix issue: mootools doesn't support fractional sizes as reported by FireFox in zoomed mode.
-		 
-		 Reproduce issue: Ctrl-scrollwheel in FireFox to see render at various zoom level; smaller zoom levels will report a border-left 
+
+		 Reproduce issue: Ctrl-scrollwheel in FireFox to see render at various zoom level; smaller zoom levels will report a border-left
 		 for the controls of less than 1px, e.g. 0.916px and /that/ will be treated by mootools (More: getComputedSize()) as 0px instead of 1px!
-		 
-		 The -1 correction is a 'somewhat safe bet' and case specific; theoretically, at particular zoom levels, the -1px correction here 
+
+		 The -1 correction is a 'somewhat safe bet' and case specific; theoretically, at particular zoom levels, the -1px correction here
 		 will _still_ not cover the collective fractional round-down issues for the controls, thus leaving you with a corrupted rendering
 		 of the milkbox caption: it will show 'empty' as the sum of the calculated widths will overshoot the parent width then.
 		 For now, the -1px 'hack' should suffice in FF practice.
-		 
+
 		 Edit: testing reveals that the theory is correct and shows up at zoom levels ~ .7; hence the 'hack' is made more tolerant by making it 2px.
-		 
-		 More info: 
-		 
+
+		 More info:
+
 		 http://htmldoodads.appspot.com/zoom-level.html
 		 http://stackoverflow.com/questions/1713771/how-to-detect-page-zoom-level-in-all-modern-browsers
 		 */
@@ -1268,7 +1275,7 @@ var MilkboxDisplay = new Class({
 		}
 
 		this.caption.setStyle('margin-right',this.controls.getComputedSize().totalWidth);
-		console.log('set caption margin right: ', this.controls.getComputedSize().totalWidth);
+		//console.log('set caption margin right: ', this.controls.getComputedSize().totalWidth);
 	},//end set_mode
 
 	set_paused:function(paused){
@@ -1417,7 +1424,16 @@ var MilkboxGallery = new Class({
 	},
 
 	check_extension:function(string){
-		return string.split('?')[0].test(/\.(gif|jpg|jpeg|png|bmp|tif|tiff|swf|html)$/i);
+		var splitted, regular_file, dyn_url;
+
+		splitted  = string.split('?')[0];
+
+		regular_file = splitted.test(/\.(gif|jpg|jpeg|png|bmp|tif|tiff|swf|html)$/i);
+		if(!regular_file){ dyn_url = splitted.test(/\/\d+$/); }
+
+		var pass = (regular_file || dyn_url) ? true : false;
+
+		return pass;
 	},
 
 	get_index_of:function(item){
