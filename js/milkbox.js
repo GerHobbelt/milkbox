@@ -386,7 +386,7 @@ this.Milkbox = new Class({
 		var regexp = new RegExp('\\.('+type+')$','i');
 		var test = splitted.test(regexp);
 
-		if(!test && type == "html" || type=="php"){
+		if(!test && (type == "html" || type=="php")){
 			test = splitted.test(/\/\d+$/);
 		}
 
