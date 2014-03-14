@@ -1283,6 +1283,9 @@ var MilkboxDisplay = new Class({
 
 		this.caption.setStyle('margin-right',this.controls.getComputedSize().totalWidth);
 		//console.log('set caption margin right: ', this.controls.getComputedSize().totalWidth);
+      if (isNaN(this.controls.getComputedSize().totalWidth)) {
+   		this.caption.setStyle('margin-right',this.controls.getComputedSize().width);
+      }
 	},//end set_mode
 
 	set_paused:function(paused){
