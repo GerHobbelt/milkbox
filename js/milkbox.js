@@ -251,6 +251,8 @@ this.Milkbox = new Class({
 			this.loadSwf(fileObj);
 		} else if (this.checkFileType(fileObj,'html')){
 			this.loadHtml(fileObj);
+		} else if (this.checkFileType(fileObj,'php')){
+			this.loadHtml(fileObj);
 		} else {//filetype:image
 			this.loadImage(fileObj);
 		}
@@ -287,7 +289,7 @@ this.Milkbox = new Class({
 
 	preloadFiles:function(preloads){
 		preloads.each(function(fileObj,index){
-			if(!this.checkFileType(fileObj,"swf") && !this.checkFileType(fileObj,"html")){
+			if(!this.checkFileType(fileObj,"swf") && !this.checkFileType(fileObj,"html") && !this.checkFileType(fileObj,"php")){
 				this.preloadImage(fileObj.href);
 			}
 		},this);
@@ -384,7 +386,7 @@ this.Milkbox = new Class({
 		var regexp = new RegExp('\\.('+type+')$','i');
 		var test = splitted.test(regexp);
 
-		if(!test && type == "html"){
+		if(!test && (type == "html" || type=="php")){
 			test = splitted.test(/\/\d+$/);
 		}
 
@@ -1091,6 +1093,11 @@ var MilkboxDisplay = new Class({
 		var mainbox_size = this.mainbox.getComputedSize();
 
 		var final_h = file_size.h+filebox_addsize+this.bottom.getComputedSize().totalHeight;
+      // For some reason, IE11 is giving NaN for this.bottom.getComputedSize().totalHeight
+      // Using .height instead
+      if (isNaN(final_h)) {
+   	   final_h = file_size.h+filebox_addsize+this.bottom.getComputedSize().height;
+      }
 
 		var target_size = {
 			w:final_w,
@@ -1276,6 +1283,9 @@ var MilkboxDisplay = new Class({
 
 		this.caption.setStyle('margin-right',this.controls.getComputedSize().totalWidth);
 		//console.log('set caption margin right: ', this.controls.getComputedSize().totalWidth);
+      if (isNaN(this.controls.getComputedSize().totalWidth)) {
+   		this.caption.setStyle('margin-right',this.controls.getComputedSize().width);
+      }
 	},//end set_mode
 
 	set_paused:function(paused){
@@ -1428,7 +1438,7 @@ var MilkboxGallery = new Class({
 
 		splitted  = string.split('?')[0];
 
-		regular_file = splitted.test(/\.(gif|jpg|jpeg|png|bmp|tif|tiff|swf|html)$/i);
+		regular_file = splitted.test(/\.(gif|jpg|jpeg|png|bmp|tif|tiff|swf|html|php)$/i);
 		if(!regular_file){ dyn_url = splitted.test(/\/\d+$/); }
 
 		var pass = (regular_file || dyn_url) ? true : false;
