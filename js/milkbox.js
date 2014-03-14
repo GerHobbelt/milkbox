@@ -1093,6 +1093,11 @@ var MilkboxDisplay = new Class({
 		var mainbox_size = this.mainbox.getComputedSize();
 
 		var final_h = file_size.h+filebox_addsize+this.bottom.getComputedSize().totalHeight;
+      // For some reason, IE11 is giving NaN for this.bottom.getComputedSize().totalHeight
+      // Using .height instead
+      if (isNaN(final_h)) {
+   	   final_h = file_size.h+filebox_addsize+this.bottom.getComputedSize().height;
+      }
 
 		var target_size = {
 			w:final_w,
